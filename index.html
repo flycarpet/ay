@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klantgegevens Ophalen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            margin-right: 10px;
+            padding: 8px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Klantgegevens Ophalen</h1>
+    <form id="orderForm">
+        <input type="text" id="orderNumber" placeholder="Voer ordernummer in" required>
+        <button type="submit">Haal Gegevens Op</button>
+    </form>
+    <div id="result">De klantgegevens zullen hier worden weergegeven...</div>
+
+  <script>
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const orderNumber = document.getElementById('orderNumber').value;
+      fetch(`/.netlify/functions/fetchCustomer?orderNumber=${orderNumber}`)
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              document.getElementById('result').textContent = 'Er is een fout opgetreden. Probeer het opnieuw.';
+          });
+  });
+  </script>
+
+</body>
+</html>
