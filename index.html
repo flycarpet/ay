@@ -1,80 +1,15 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Bestelgegevens</title>
-    <style>
-        /* Voeg hier je CSS-stijlen toe */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <!-- Stijlen -->
 </head>
 <body>
     <input type="text" id="orderIdInput" placeholder="Voer Order ID in">
     <button onclick="fetchOrderData()">Haal Bestelling Op</button>
     <div id="orderDetails"></div>
 
-    <script>
-function fetchOrderData() {
-    var orderId = document.getElementById('orderIdInput').value;
-    fetch('JOUW_GAS_WEBAPP_URL', {
-        method: 'POST',
-        mode: 'no-cors', // Dit is nodig voor GAS, maar beperkt de soorten responses die je kunt ontvangen
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderId: orderId })
-    })
-    .then(response => response.text()) // In 'no-cors' mode kun je alleen .text() gebruiken
-    .then(data => {
-        // Aangenomen dat je JSON-data correct terugkomt, verwerk en toon deze hier
-        // Dit voorbeeld gaat ervan uit dat je response in JSON is en correcte CORS headers heeft
-        // Je moet mogelijk je GAS-script aanpassen om CORS te ondersteunen of een andere tussenoplossing te vinden
-        displayOrderDetails(JSON.parse(data));
-    })
-    .catch((error) => {
-        console.error('Fout:', error);
-    });
-}
-
-function displayOrderDetails(data) {
-    var detailsDiv = document.getElementById('orderDetails');
-    detailsDiv.innerHTML = ''; // Leegmaken voor nieuwe gegevens
-    
-    // Creëer en vul een tabel met de ordergegevens
-    var table = document.createElement('table');
-    // Voeg hier code toe om de tabelkop (th) en tabelrijen (tr) te genereren op basis van je data
-    // Bijvoorbeeld:
-    var thead = table.createTHead();
-    var row = thead.insertRow();
-    var headers = ["Productcode", "Hoeveelheid", "Telefoonnummer", "E-mailadres"]; // Pas aan op basis van je datastructuur
-    headers.forEach(headerText => {
-        var header = document.createElement("th");
-        header.textContent = headerText;
-        row.appendChild(header);
-    });
-
-    // Voeg data toe aan de tabel
-    data.forEach(item => {
-        var row = table.insertRow();
-        // Pas de volgende regels aan op basis van de structuur van je data
-        row.insertCell().textContent = item.productcode;
-        row.insertCell().textContent = item.amount;
-        row.insertCell().textContent = item.telephone;
-        row.insertCell().textContent = item.emailaddress;
-    });
-
-    detailsDiv.appendChild(table);
-}
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
